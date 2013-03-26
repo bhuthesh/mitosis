@@ -45,7 +45,7 @@ The steps involved are roughly as follows:
   * Connect to this port number and fetch application state from the old
     session. It is passed into a callback function you specify. At this point,
     it is up to you to decide what to do with this state data.
-  * We disconnect from the server and ha nd control back to your code.
+  * We disconnect from the server and hand control back to your code.
 
 * Application wants to fork itself and does so by calling `mitosis.Split()`.
   * Mitosis sets up a TCP listener on a random, free port.
