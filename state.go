@@ -11,18 +11,16 @@ import (
 // StateFunc is a callback which is called during library initialization.
 // It passes any state information from an old program session into the
 // new session.
-type StateFunc func([]string, []byte, []*os.File)
+type StateFunc func([]byte, []*os.File)
 
 // State defines the application state that should be transfered
 // to a new program session.
 type State struct {
-	Commandline []string   // Optional commandline arguments for the new session.
 	Data        []byte     // Custom blob of state information.
 	Files       []*os.File // List of file descriptors that need to be inherited.
 }
 
 func (sd *State) write(w io.Writer) {
-	writeStringSlice(w, sd.Commandline)
 	writeByteSlice(w, sd.Data)
 	writeU32(w, uint32(len(sd.Files)))
 
@@ -32,7 +30,6 @@ func (sd *State) write(w io.Writer) {
 }
 
 func (sd *State) read(r io.Reader) {
-	sd.Commandline = readStringSlice(r)
 	sd.Data = readByteSlice(r)
 	sd.Files = make([]*os.File, readU32(r))
 

@@ -39,7 +39,6 @@ func Init(sf StateFunc) error {
 // session to shut down.
 func Split(commandline []string, data []byte, files []*os.File) (<-chan bool, error) {
 	state := &State{
-		Commandline: commandline,
 		Data:        data,
 		Files:       files,
 	}
@@ -54,7 +53,7 @@ func Split(commandline []string, data []byte, files []*os.File) (<-chan bool, er
 	}
 
 	// Launch the new program instance.
-	argv := append(state.Commandline, "-mitosis", fmt.Sprintf("%d", port))
+	argv := append(commandline, "-mitosis", fmt.Sprintf("%d", port))
 
 	cmd := exec.Command(path, argv...)
 	cmd.Dir, _ = filepath.Split(path)

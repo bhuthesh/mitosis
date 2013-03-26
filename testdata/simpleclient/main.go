@@ -62,6 +62,6 @@ func initLog() *os.File {
 }
 
 // onState handles application state sent by an old program session.
-func onState(commandline []string, data []byte, files []*os.File) {
+func onState(data []byte, files []*os.File) {
 	logger.Printf("onState: %s", data)
 }
