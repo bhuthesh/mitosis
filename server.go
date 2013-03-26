@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"net"
+	"strconv"
 )
 
 const (
@@ -25,20 +26,19 @@ func spawnServer(state *State, done chan<- bool) (uint16, error) {
 
 	port = defaultPort
 
-	// Find an open port, the brute-force way.
-	for {
-		listener, err = net.Listen(protocol, fmt.Sprintf(":%d", port))
-
-		if err == nil {
-			break
-		}
-
-		port++
-
-		// Wrapped around uint16 capacity?
-		if port == 0 {
-			return 0, errors.New("No valid port number could be found.")
-		}
+	// open a port and get the port number
+	listener, err = net.Listen(protocol, ":0")
+	if err != nil {
+		return 0, errors.New("Failed to open a listen port")
+	}
+	laddr := listener.Addr().String()
+	_, portstr, err := net.SplitHostPort(laddr)
+	if err != nil {
+		return 0, fmt.Errorf("Failed to get port from listen port address string: %s", laddr)
+	}
+	port, err = strconv.ParseUint(portstr, 10, 16)
+	if err != nil {
+		return 0, fmt.Errorf("Bad port number string: %s", portstr)
 	}
 
 	go func() {
