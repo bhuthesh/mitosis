@@ -36,7 +36,7 @@ func spawnClient(port uint, sf StateFunc) (err error) {
 	state := new(State)
 	state.read(conn)
 
-	go sf(state)
+	sf(state)
 
 	Log("[mitosis] Done.")
 	return nil
