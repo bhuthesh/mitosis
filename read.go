@@ -8,6 +8,13 @@ import (
 	"io"
 )
 
+// check panics with the given error if it is not nil.
+func check(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 var endian = binary.LittleEndian
 
 func readU32(r io.Reader) uint32 {

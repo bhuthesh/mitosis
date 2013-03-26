@@ -48,8 +48,6 @@ func spawnServer(state *State, done chan<- bool) (uint, error) {
 	go func() {
 		defer listener.Close()
 
-		Log("[mitosis] Listening on :%d...", port)
-
 		for {
 			client, err := listener.Accept()
 			if err != nil {
@@ -67,15 +65,9 @@ func spawnServer(state *State, done chan<- bool) (uint, error) {
 func handleClient(client net.Conn, state *State, done chan<- bool) {
 	defer func() {
 		client.Close()
-
-		if err := recover(); err != nil {
-			Log("%v", err)
-		}
+		recover()
 	}()
 
-	Log("[mitosis] Client %s connected", client.RemoteAddr())
-
-	Log("[mitosis] Receiving protocol header...")
 	// Make sure the protocol header is there and valid.
 	hdr := readRaw(client, uint32(len(magick)))
 
@@ -83,11 +75,9 @@ func handleClient(client net.Conn, state *State, done chan<- bool) {
 		return
 	}
 
-	Log("[mitosis] Sending application state...")
 	// Send pending state information.
 	state.write(client)
 
 	// Signal completion.
-	Log("[mitosis] Done.")
 	done <- true
 }

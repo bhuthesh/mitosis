@@ -30,7 +30,6 @@ func Init(sf StateFunc) error {
 		return nil
 	}
 
-	Log("Port: %d", serverPort)
 	return spawnClient(serverPort, sf)
 }
 

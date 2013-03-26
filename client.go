@@ -20,8 +20,6 @@ func spawnClient(port uint, sf StateFunc) (err error) {
 		}
 	}()
 
-	Log("[mitosis] Connecting to :%d...", port)
-
 	conn, err := net.Dial(protocol, fmt.Sprintf(":%d", port))
 	if err != nil {
 		return err
@@ -29,15 +27,12 @@ func spawnClient(port uint, sf StateFunc) (err error) {
 
 	defer conn.Close()
 
-	Log("[mitosis] Sending protocol header..")
 	writeRaw(conn, magick)
 
-	Log("[mitosis] Receiving application state...")
 	state := new(State)
 	state.read(conn)
 
 	sf(state)
 
-	Log("[mitosis] Done.")
 	return nil
 }
