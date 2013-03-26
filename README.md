@@ -1,4 +1,12 @@
-## mitosis
+## Mitosis
+
+### Short description
+
+mitosis allows Go applications to easily fork themselves while preserving
+arbitrary application state data and inherit file descriptors.
+
+
+### Loner description
 
 mitosis supplies a unified mechanism by which any Go application can have
 itself relaunched into a new session, while allowing it to pass on arbitrary
@@ -14,15 +22,15 @@ package, and implement the API it exposes. An example of this can be seen in
 
 I wrote this because I have several long running applications which need to
 be updated occasionally. One of which is an IRC bot. Its functionality consists
-of plugin modules. But because Go does not support runtime loading/unloading
-of code, I am relegated to recompiling the bot, stopping the original, and
-relaunching it. This naturally means it will lose its connection to the IRC
-server. Not only does this generate JOIN/PART noise in the channels it
-occupies, it is simply unnecessary if I was able to launch a new bot instance,
-hand it the existing connection and then gracefuly shut down the original.
+of plugin modules. Because Go does not support hit-plugging of code, I am
+relegated to recompiling the bot, stopping the original and relaunching it.
 
-This is what Mitosis seeks to offer in a generalized plug-and-play fashion,
-so other applications may benefit from it.
+This naturally means it will lose its connection to the IRC server. Not only
+does this generate JOIN/PART noise in the channels it occupies, it is simply
+unnecessary if I am able to launch a new bot instance, hand it the existing
+connection and then gracefuly shut down the original.
+
+This is what Mitosis seeks to offer in a generalized plug-and-play fashion.
 
 
 ### Usage
