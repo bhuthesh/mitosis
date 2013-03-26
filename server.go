@@ -81,7 +81,7 @@ func handleClient(client net.Conn, state *State, done chan<- bool) {
 
 	Log("[mitosis] Sending application state...")
 	// Send pending state information.
-	state.Write(client)
+	state.write(client)
 
 	// Signal completion.
 	Log("[mitosis] Done.")

@@ -18,7 +18,7 @@ type State struct {
 	Files       []*os.File // List of file descriptors that need to be inherited.
 }
 
-func (sd *State) Write(w io.Writer) {
+func (sd *State) write(w io.Writer) {
 	writeStringSlice(w, sd.Commandline)
 	writeByteSlice(w, sd.Data)
 	writeU32(w, uint32(len(sd.Files)))
@@ -28,7 +28,7 @@ func (sd *State) Write(w io.Writer) {
 	}
 }
 
-func (sd *State) Read(r io.Reader) {
+func (sd *State) read(r io.Reader) {
 	sd.Commandline = readStringSlice(r)
 	sd.Data = readByteSlice(r)
 	sd.Files = make([]*os.File, readU32(r))

@@ -34,7 +34,7 @@ func spawnClient(port uint, sf StateFunc) (err error) {
 
 	Log("[mitosis] Receiving application state...")
 	state := new(State)
-	state.Read(conn)
+	state.read(conn)
 
 	go sf(state)
 
