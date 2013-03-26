@@ -10,14 +10,14 @@ import (
 
 var endian = binary.LittleEndian
 
-func readUintptr(r io.Reader) uintptr {
-	var v uintptr
+func readU32(r io.Reader) uint32 {
+	var v uint32
 	check(binary.Read(r, endian, &v))
 	return v
 }
 
-func readU32(r io.Reader) uint32 {
-	var v uint32
+func readU64(r io.Reader) uint64 {
+	var v uint64
 	check(binary.Read(r, endian, &v))
 	return v
 }

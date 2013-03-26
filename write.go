@@ -10,11 +10,11 @@ import (
 
 func writeString(w io.Writer, v string) {}
 
-func writeUintptr(w io.Writer, v uintptr) {
+func writeU32(w io.Writer, v uint32) {
 	check(binary.Write(w, endian, v))
 }
 
-func writeU32(w io.Writer, v uint32) {
+func writeU64(w io.Writer, v uint64) {
 	check(binary.Write(w, endian, v))
 }
 

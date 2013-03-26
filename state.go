@@ -27,7 +27,7 @@ func (sd *State) write(w io.Writer) {
 	writeU32(w, uint32(len(sd.Files)))
 
 	for _, f := range sd.Files {
-		writeUintptr(w, f.Fd())
+		writeU64(w, uint64(f.Fd()))
 	}
 }
 
@@ -37,7 +37,7 @@ func (sd *State) read(r io.Reader) {
 	sd.Files = make([]*os.File, readU32(r))
 
 	for i := range sd.Files {
-		fd := readUintptr(r)
+		fd := uintptr(readU64(r))
 		sd.Files[i] = os.NewFile(fd, "")
 	}
 }
