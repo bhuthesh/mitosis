@@ -8,9 +8,12 @@ import (
 	"os"
 )
 
+// StateFunc is a callback which is called during library initialization.
+// It passes any state information from an old program session into the
+// new session.
 type StateFunc func(*State)
 
-// State defines the applicaiton state which should be transfered
+// State defines the application state that should be transfered
 // to a new program session.
 type State struct {
 	Commandline []string   // Optional commandline arguments for the new session.
