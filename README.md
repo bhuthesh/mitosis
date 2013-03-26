@@ -33,6 +33,33 @@ connection and then gracefuly shut down the original.
 This is what Mitosis seeks to offer in a generalized plug-and-play fashion.
 
 
+### Technical bits
+
+The steps involved are roughly as follows:
+
+* Application is launched:
+  * Call `mitosis.Init()`: Check if the current session was launched by
+    mitosis. If so, it has gotten the `-mitosis=xxxx` commandline parameter.
+    This holds the port number on which the previous session is listening for
+    TCP connections.
+  * Connect to this port number and fetch application state from the old
+    session. It is passed into a callback function you specify. At this point,
+    it is up to you to decide what to do with this state data.
+  * We disconnect from the server and ha nd control back to your code.
+
+* Application wants to fork itself and does so by calling `mitosis.Split()`.
+  * Mitosis sets up a TCP listener on a random, free port.
+  * It executes its own binary, passing it any commandline arguments which
+    are specified in the `mitosis.State` structure as well as the `-mitosis`
+    flag, which holds the port number on which it is listening.
+  * It waits for the new instance to connect to it.
+  * Performs some /very/ rudimentary protocol verification.
+  * Sends the current application state to the new instance and disconnects.
+  * The application is now notified of successful forking by means of a
+    boolean channel. Once this channel is triggered, the application will know
+    it is safe to shut itself down.
+
+
 ### Usage
 
     $ go get github.com/jteeuwen/mitosis
