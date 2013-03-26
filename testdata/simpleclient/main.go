@@ -32,7 +32,7 @@ func main() {
 	// Initialize mitosis and give it a StateFunc handler. This will be called
 	// with state data from a previous session if applicable.
 	// Note that this must be done /after/ the mandatory flag.Parse() call.
-	err := mitosis.Init(onState)
+	_, err := mitosis.Init(onState)
 	if err != nil {
 		logger.Fatalf("Init error: %v", err)
 	}

@@ -25,12 +25,12 @@ func init() {
 //
 // It accepts a StateFunc handler, which will be called with the application
 // state data from the old program instance.
-func Init(sf StateFunc) error {
+func Init(sf StateFunc) (bool, error) {
 	if serverPort == 0 {
-		return nil
+		return false, nil
 	}
 
-	return spawnClient(serverPort, sf)
+	return true, spawnClient(serverPort, sf)
 }
 
 // Split forks off a new copy of the current application, and hands it the
