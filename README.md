@@ -2,19 +2,19 @@
 
 ### Short description
 
-mitosis allows Go applications to easily fork themselves while preserving
-arbitrary application state data and inherit file descriptors.
+Mitosis allows Go applications to easily fork themselves while preserving
+arbitrary application state and inherit file descriptors.
 
 
-### Loner description
+### Longer description
 
-mitosis supplies a unified mechanism by which any Go application can have
+Mitosis supplies a simple mechanism by which any Go application can have
 itself relaunched into a new session, while allowing it to pass on arbitrary
 application state to the new instance. This includes inheritance of open
 file descriptors.
 
-Any aplication wanting to hook into this service, must import the `mitosis`
-package, and implement the API it exposes. An example of this can be seen in
+Any aplication wanting to hook into this service, must import this package,
+and implement the API it exposes. An example of this can be seen in
 `testdata/main.go`.
 
 
