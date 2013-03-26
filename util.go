@@ -14,7 +14,7 @@ import (
 var LogFile = os.Stdout
 
 // Log outputs log information to a previously specified target file.
-// It only outputs data if the Verbose flag is set to true.
+// It only outputs data if the LogFile variable is set.
 func Log(f string, argv ...interface{}) {
 	if LogFile == nil {
 		return
