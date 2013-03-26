@@ -31,7 +31,7 @@ func spawnClient(port uint, sf StateFunc) (err error) {
 
 	var state State
 	state.read(conn)
-	sf(state.Data, state.Files)
+	sf(&state)
 
 	return nil
 }

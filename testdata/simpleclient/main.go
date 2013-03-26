@@ -41,13 +41,21 @@ func main() {
 	<-time.After(5e9)
 
 	// Split ourselves off into a new session.
-	done, err := mitosis.Split(nil, []byte("Sample data."), nil)
+	state := &mitosis.State{
+		Data: []byte("Sample data."),
+	}
+	done, err := mitosis.Split(nil, state)
 	if err != nil {
 		logger.Fatalf("Split error: %v", err)
 	}
 
 	// Sit and wait for us to receive the OK to shut down.
 	<-done
+}
+
+// onState handles application state sent by an old program session.
+func onState(state *mitosis.State) {
+	logger.Printf("onState: %s", state.Data)
 }
 
 // initLog initialize a logger to write to an external file.
@@ -59,9 +67,4 @@ func initLog() *os.File {
 
 	logger = log.New(logfile, "", log.LstdFlags)
 	return logfile
-}
-
-// onState handles application state sent by an old program session.
-func onState(data []byte, files []*os.File) {
-	logger.Printf("onState: %s", data)
 }

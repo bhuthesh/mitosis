@@ -4,6 +4,7 @@
 package mitosis
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -37,11 +38,11 @@ func Init(sf StateFunc) (bool, error) {
 // given state information. It returns a channel on which mitosis will signal
 // if the fork was successful. This would indicate it is safe for the current
 // session to shut down.
-func Split(commandline []string, data []byte, files []*os.File) (<-chan bool, error) {
-	state := &State{
-		Data:        data,
-		Files:       files,
+func Split(commandline []string, state *State) (<-chan bool, error) {
+	if state == nil {
+		return nil, errors.New("Invalid state")
 	}
+
 	done := make(chan bool)
 	path := filepath.Clean(os.Args[0])
 	path, _ = filepath.Abs(path)
@@ -58,6 +59,7 @@ func Split(commandline []string, data []byte, files []*os.File) (<-chan bool, er
 	cmd := exec.Command(path, argv...)
 	cmd.Dir, _ = filepath.Split(path)
 	cmd.ExtraFiles = state.Files
+	cmd.Env = os.Environ()
 
 	return done, cmd.Start()
 }

@@ -11,13 +11,13 @@ import (
 // StateFunc is a callback which is called during library initialization.
 // It passes any state information from an old program session into the
 // new session.
-type StateFunc func([]byte, []*os.File)
+type StateFunc func(*State)
 
 // State defines the application state that should be transfered
 // to a new program session.
 type State struct {
-	Data        []byte     // Custom blob of state information.
-	Files       []*os.File // List of file descriptors that need to be inherited.
+	Data  []byte     // Custom blob of state information.
+	Files []*os.File // List of file descriptors that need to be inherited.
 }
 
 func (sd *State) write(w io.Writer) {
