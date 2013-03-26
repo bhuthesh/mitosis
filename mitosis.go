@@ -33,11 +33,16 @@ func Init(sf StateFunc) error {
 	return spawnClient(serverPort, sf)
 }
 
-// Split forks off a new copy of the current application,
-// and hands it the given state information. It returns a channel on
-// which mitosis will signal if the fork was successful. This would
-// indicate it is safe for the current session to shut down.
-func Split(state *State) (<-chan bool, error) {
+// Split forks off a new copy of the current application, and hands it the
+// given state information. It returns a channel on which mitosis will signal
+// if the fork was successful. This would indicate it is safe for the current
+// session to shut down.
+func Split(commandline []string, data []byte, files []*os.File) (<-chan bool, error) {
+	state := &State{
+		Commandline: commandline,
+		Data:        data,
+		Files:       files,
+	}
 	done := make(chan bool)
 	path := filepath.Clean(os.Args[0])
 	path, _ = filepath.Abs(path)

@@ -29,10 +29,9 @@ func spawnClient(port uint, sf StateFunc) (err error) {
 
 	writeRaw(conn, magick)
 
-	state := new(State)
+	var state State
 	state.read(conn)
-
-	sf(state)
+	sf(state.Commandline, state.Data, state.Files)
 
 	return nil
 }
