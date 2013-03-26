@@ -2,9 +2,7 @@
 // Its contents can be found in the enclosed LICENSE file.
 
 /*
-mitosis can be talked to through a local socket connection, carrying small
-binary protocol messages, which are defined in this package.
-Any application wanting to make use of the mitosis services, should import
-this package and use the API.
+Mitosis allows Go applications to easily fork themselves while preserving
+arbitrary application state and inherit file descriptors.
 */
 package mitosis
