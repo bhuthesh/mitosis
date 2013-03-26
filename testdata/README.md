@@ -1,6 +1,6 @@
 ## Sample mitosis client
 
-This program shows how a client can use the gopm service to issue automatic
+This program shows how a client can use the mitosis service to issue automatic
 relaunches with preservation of application state across sessions.
 
 **WARNING**: This code is for demonstration purposes only.
